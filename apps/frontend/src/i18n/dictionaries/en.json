@@ -1,0 +1,71 @@
+{
+  "navigation": {
+    "dashboard": "Dashboard",
+    "pools": "Liquidity Pools"
+  },
+  "dashboard": {
+    "title": "Trading Dashboard",
+    "subtitle": "Monitor your trading positions and performance",
+    "language": "Language",
+    "refresh": "Refresh",
+    "lastSynced": "Last synced",
+    "loading": "Loading orders...",
+    "empty": "No orders found",
+    "stats": {
+      "totalValue": "Total Value",
+      "openPositions": "Open Positions",
+      "pendingOrders": "Pending Orders"
+    },
+    "filters": {
+      "all": "All",
+      "open": "Open",
+      "pending": "Pending",
+      "closed": "Closed",
+      "cancelled": "Cancelled"
+    },
+    "table": {
+      "assetPair": "Asset Pair",
+      "side": "Side",
+      "quantity": "Quantity",
+      "price": "Price",
+      "status": "Status",
+      "timestamp": "Timestamp"
+    }
+  },
+  "pools": {
+    "title": "Liquidity Pools",
+    "subtitle": "Track historical balances from DragonSwap and Sailor Finance",
+    "loading": "Loading pools...",
+    "empty": "No pools found",
+    "error": "Failed to load pools",
+    "retry": "Retry",
+    "all": "All DEXs",
+    "dragonswap": "DragonSwap",
+    "sailor": "Sailor Finance",
+    "tvl": "TVL",
+    "volume24h": "24h Volume",
+    "apr": "APR",
+    "pairName": "Pair",
+    "feeTier": "Fee Tier",
+    "details": {
+      "title": "Pool Details",
+      "address": "Pool Address",
+      "tokens": "Token Addresses",
+      "feeTier": "Fee Tier",
+      "dex": "DEX"
+    },
+    "chart": {
+      "title": "Historical Data",
+      "tvl": "TVL",
+      "volume": "Volume",
+      "reserves": "Reserves",
+      "price": "Price"
+    },
+    "timeRange": {
+      "label": "Time Range",
+      "day": "24H",
+      "week": "7D",
+      "month": "30D"
+    }
+  }
+}

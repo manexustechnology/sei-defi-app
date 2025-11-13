@@ -1,0 +1,11 @@
+node_modules
+dist
+.nx
+.git
+.gitignore
+.github
+npm-debug.log
+Dockerfile
+*.dockerfile
+tmp
+coverage

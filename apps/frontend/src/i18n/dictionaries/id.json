@@ -1,0 +1,71 @@
+{
+  "navigation": {
+    "dashboard": "Dasbor",
+    "pools": "Pool Likuiditas"
+  },
+  "dashboard": {
+    "title": "Dasbor Trading",
+    "subtitle": "Pantau posisi dan kinerja trading Anda",
+    "language": "Bahasa",
+    "refresh": "Segarkan",
+    "lastSynced": "Terakhir disinkronkan",
+    "loading": "Memuat pesanan...",
+    "empty": "Tidak ada pesanan",
+    "stats": {
+      "totalValue": "Total Nilai",
+      "openPositions": "Posisi Terbuka",
+      "pendingOrders": "Pesanan Tertunda"
+    },
+    "filters": {
+      "all": "Semua",
+      "open": "Terbuka",
+      "pending": "Tertunda",
+      "closed": "Ditutup",
+      "cancelled": "Dibatalkan"
+    },
+    "table": {
+      "assetPair": "Pasangan Aset",
+      "side": "Sisi",
+      "quantity": "Jumlah",
+      "price": "Harga",
+      "status": "Status",
+      "timestamp": "Waktu"
+    }
+  },
+  "pools": {
+    "title": "Pool Likuiditas",
+    "subtitle": "Lacak saldo historis dari DragonSwap dan Sailor Finance",
+    "loading": "Memuat pool...",
+    "empty": "Tidak ada pool ditemukan",
+    "error": "Gagal memuat pool",
+    "retry": "Coba Lagi",
+    "all": "Semua DEX",
+    "dragonswap": "DragonSwap",
+    "sailor": "Sailor Finance",
+    "tvl": "TVL",
+    "volume24h": "Volume 24j",
+    "apr": "APR",
+    "pairName": "Pasangan",
+    "feeTier": "Tingkat Biaya",
+    "details": {
+      "title": "Detail Pool",
+      "address": "Alamat Pool",
+      "tokens": "Alamat Token",
+      "feeTier": "Tingkat Biaya",
+      "dex": "DEX"
+    },
+    "chart": {
+      "title": "Data Historis",
+      "tvl": "TVL",
+      "volume": "Volume",
+      "reserves": "Cadangan",
+      "price": "Harga"
+    },
+    "timeRange": {
+      "label": "Rentang Waktu",
+      "day": "24J",
+      "week": "7H",
+      "month": "30H"
+    }
+  }
+}

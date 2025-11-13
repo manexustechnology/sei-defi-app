@@ -15,8 +15,10 @@ export default async function LocalePage({ params }: LocalePageProps) {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 p-6">
-      <Dashboard />
+    <main className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      <div className="mx-auto max-w-7xl px-6 py-8">
+        <Dashboard />
+      </div>
     </main>
   );
 }

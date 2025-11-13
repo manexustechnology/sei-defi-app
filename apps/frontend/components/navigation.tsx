@@ -22,8 +22,8 @@ export function Navigation({ locale, links }: NavigationProps) {
   ];
 
   return (
-    <nav className="border-b">
-      <div className="mx-auto flex max-w-7xl gap-6 px-6">
+    <nav className="border-b border-border/40 backdrop-blur-xl bg-background/80 sticky top-0 z-50">
+      <div className="mx-auto flex max-w-7xl gap-1 px-6">
         {navItems.map((item) => {
           const isActive = item.exact
             ? pathname === item.href
@@ -34,13 +34,16 @@ export function Navigation({ locale, links }: NavigationProps) {
               key={item.href}
               href={item.href}
               className={cn(
-                'border-b-2 py-4 text-sm font-medium transition-colors hover:text-primary',
+                'relative border-b-2 px-4 py-4 text-sm font-semibold transition-all duration-200',
                 isActive
                   ? 'border-primary text-primary'
-                  : 'border-transparent text-muted-foreground'
+                  : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/50'
               )}
             >
               {item.label}
+              {isActive && (
+                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent" />
+              )}
             </Link>
           );
         })}

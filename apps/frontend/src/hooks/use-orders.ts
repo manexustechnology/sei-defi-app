@@ -5,6 +5,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import type { OrderStatus } from '@/stores/trading-store';
 import { useTradingStore } from '@/stores/trading-store';
+import { apiFetch } from '@/lib/api';
 
 export type Order = {
   id: string;
@@ -16,20 +17,28 @@ export type Order = {
   timestamp: string;
 };
 
-type OrdersResponse = {
+type ApiResponse<T> = {
+  success: boolean;
+  data: T;
+  message?: string;
+  timestamp: string;
+};
+
+type OrdersData = {
   orders: Order[];
 };
 
 const ORDERS_QUERY_KEY = ['orders'];
 
-async function fetchOrders(): Promise<OrdersResponse> {
-  const response = await fetch('/api/orders', { cache: 'no-store' });
-
-  if (!response.ok) {
-    throw new Error('Failed to load orders');
+async function fetchOrders(): Promise<Order[]> {
+  try {
+    const response = await apiFetch<ApiResponse<OrdersData>>('/orders');
+    return response.data.orders;
+  } catch (error) {
+    // Backend might not have this endpoint yet, return empty array
+    console.warn('Orders endpoint not available:', error);
+    return [];
   }
-
-  return response.json();
 }
 
 export function useOrders() {
@@ -41,8 +50,7 @@ export function useOrders() {
     queryFn: fetchOrders,
     placeholderData: keepPreviousData,
     refetchInterval: process.env.NODE_ENV === 'test' ? false : 60_000,
-    select: (data) => data.orders,
-    meta: { description: 'Fetches latest trading orders.' },
+    meta: { description: 'Fetches latest trading orders from backend.' },
   });
 
   useEffect(() => {

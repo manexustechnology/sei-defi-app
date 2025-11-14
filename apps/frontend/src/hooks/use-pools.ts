@@ -2,6 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query';
 
+import { apiFetch } from '@/lib/api';
+
 export type Pool = {
   id: string;
   poolAddress: string;
@@ -35,6 +37,10 @@ type ApiResponse<T> = {
   timestamp: string;
 };
 
+/**
+ * Fetch liquidity pools from the backend
+ * @param dex - Optional filter by DEX (dragonswap or sailor)
+ */
 export function usePools(dex?: 'dragonswap' | 'sailor') {
   return useQuery({
     queryKey: ['pools', dex],
@@ -42,12 +48,8 @@ export function usePools(dex?: 'dragonswap' | 'sailor') {
       const params = new URLSearchParams();
       if (dex) params.append('dex', dex);
 
-      const response = await fetch(`/api/pools?${params.toString()}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch pools');
-      }
-
-      const result: ApiResponse<Pool[]> = await response.json();
+      const endpoint = `/pools${params.toString() ? `?${params.toString()}` : ''}`;
+      const result = await apiFetch<ApiResponse<Pool[]>>(endpoint);
       return result.data;
     },
     staleTime: 30000, // 30 seconds
@@ -55,6 +57,12 @@ export function usePools(dex?: 'dragonswap' | 'sailor') {
   });
 }
 
+/**
+ * Fetch historical data for a specific pool
+ * @param poolId - Pool ID
+ * @param from - Start date
+ * @param to - End date
+ */
 export function usePoolHistory(poolId: string, from: Date, to: Date) {
   return useQuery({
     queryKey: ['pool-history', poolId, from.toISOString(), to.toISOString()],
@@ -64,12 +72,8 @@ export function usePoolHistory(poolId: string, from: Date, to: Date) {
         to: to.toISOString(),
       });
 
-      const response = await fetch(`/api/pools/${poolId}/history?${params.toString()}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch pool history');
-      }
-
-      const result: ApiResponse<PoolHistoricalData[]> = await response.json();
+      const endpoint = `/pools/${poolId}/history?${params.toString()}`;
+      const result = await apiFetch<ApiResponse<PoolHistoricalData[]>>(endpoint);
       return result.data;
     },
     enabled: !!poolId,

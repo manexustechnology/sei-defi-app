@@ -16,7 +16,6 @@ import {
   Activity,
 } from 'lucide-react';
 
-import { LanguageSwitcher } from '@/components/language-switcher';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -217,7 +216,6 @@ export function Dashboard() {
           <p className="text-muted-foreground">{dashboard.subtitle}</p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          <LanguageSwitcher label={dashboard.language} activeLocale={locale} />
           <Filters
             filters={filters}
             activeFilter={statusFilter}

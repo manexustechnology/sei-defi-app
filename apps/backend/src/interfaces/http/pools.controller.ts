@@ -3,8 +3,8 @@ import { ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
 
 import { GetPoolsUseCase } from '../../core/application/use-cases/get-pools.use-case';
 import { GetPoolHistoryUseCase } from '../../core/application/use-cases/get-pool-history.use-case';
-import { 
-  PoolResponseDto, 
+import {
+  PoolResponseDto,
   PoolHistoricalDataDto,
   GetPoolsQueryDto,
   GetHistoricalDataQueryDto,
@@ -22,7 +22,7 @@ export class PoolsController {
   constructor(
     private readonly getPoolsUseCase: GetPoolsUseCase,
     private readonly getPoolHistoryUseCase: GetPoolHistoryUseCase,
-  ) {}
+  ) { }
 
   @Get()
   @HttpCode(HttpStatus.OK)

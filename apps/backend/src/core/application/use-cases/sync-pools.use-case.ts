@@ -17,23 +17,31 @@ export class SyncPoolsUseCase {
     private readonly sailorClient: SailorClient,
     @Inject(POOL_REPOSITORY)
     private readonly poolRepository: PoolRepositoryPort,
-  ) {}
+  ) { }
 
-  async execute(): Promise<{ synced: number; errors: number }> {
+  async execute(): Promise<{ synced: number; errors: number; details: { dragonswap: number; sailor: number } }> {
     this.logger.log('Starting pool synchronization...');
 
     let syncedCount = 0;
     let errorCount = 0;
+    let dragonswapCount = 0;
+    let sailorCount = 0;
 
     try {
       // Fetch pools from DragonSwap
+      this.logger.log('📡 Fetching pools from DragonSwap...');
       const dragonPools = await this.dragonSwapClient.fetchPools();
-      this.logger.log(`Fetched ${dragonPools.length} pools from DragonSwap`);
+      this.logger.log(`✅ Fetched ${dragonPools.length} pools from DragonSwap`);
+
+      if (dragonPools.length === 0) {
+        this.logger.warn('⚠️  DragonSwap returned 0 pools - API might not be available or configured');
+      }
 
       for (const poolData of dragonPools) {
         try {
           await this.syncPool(poolData, 'dragonswap');
           syncedCount++;
+          dragonswapCount++;
         } catch (error) {
           this.logger.error(`Failed to sync DragonSwap pool ${poolData.address}`, error);
           errorCount++;
@@ -41,24 +49,39 @@ export class SyncPoolsUseCase {
       }
 
       // Fetch pools from Sailor Finance
+      this.logger.log('📡 Fetching pools from Sailor Finance...');
       const sailorPools = await this.sailorClient.fetchPools();
-      this.logger.log(`Fetched ${sailorPools.length} pools from Sailor Finance`);
+      this.logger.log(`✅ Fetched ${sailorPools.length} pools from Sailor Finance`);
+
+      if (sailorPools.length === 0) {
+        this.logger.warn('⚠️  Sailor Finance returned 0 pools - API might not be available');
+      }
 
       for (const poolData of sailorPools) {
         try {
           await this.syncPool(poolData, 'sailor');
           syncedCount++;
+          sailorCount++;
         } catch (error) {
           this.logger.error(`Failed to sync Sailor pool ${poolData.address}`, error);
           errorCount++;
         }
       }
 
-      this.logger.log(`Pool synchronization complete: ${syncedCount} synced, ${errorCount} errors`);
+      this.logger.log(
+        `✅ Pool synchronization complete: ${syncedCount} total (DragonSwap: ${dragonswapCount}, Sailor: ${sailorCount}), ${errorCount} errors`
+      );
 
-      return { synced: syncedCount, errors: errorCount };
+      return {
+        synced: syncedCount,
+        errors: errorCount,
+        details: {
+          dragonswap: dragonswapCount,
+          sailor: sailorCount,
+        }
+      };
     } catch (error) {
-      this.logger.error('Pool synchronization failed', error);
+      this.logger.error('❌ Pool synchronization failed', error);
       throw error;
     }
   }

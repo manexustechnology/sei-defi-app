@@ -1,19 +1,22 @@
-FROM node:20-alpine AS base
+FROM node:24-slim AS base
 WORKDIR /app
 
 FROM base AS deps
-RUN apk add --no-cache libc6-compat
-COPY package.json package-lock.json ./
+# Install pnpm and build dependencies
+RUN npm install -g pnpm
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
+COPY package.json pnpm-lock.yaml ./
 COPY nx.json tsconfig.base.json ./
-RUN npm ci
+RUN pnpm install --frozen-lockfile
 
 FROM deps AS builder
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NX_DAEMON=false
-RUN npx nx build frontend --configuration=production --skip-nx-cache
+RUN pnpm nx build frontend --configuration=production --skip-nx-cache
 
-FROM node:20-alpine AS runner
+FROM node:24-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1

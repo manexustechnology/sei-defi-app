@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 
 import { LocaleProvider } from '@/components/providers/locale-provider';
 import { QueryProvider } from '@/components/providers/query-provider';
-import { Navigation } from '@/components/navigation';
+import { OrderlyProvider } from '@/components/providers/orderly-provider';
 import { getDictionary, isLocale, locales, type Locale } from '@/i18n/config';
 
 type LocaleLayoutProps = {
@@ -27,8 +27,9 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   return (
     <LocaleProvider locale={locale} dictionary={dictionary}>
       <QueryProvider>
-        <Navigation locale={locale} links={dictionary.navigation} />
-        {children}
+        <OrderlyProvider>
+          {children}
+        </OrderlyProvider>
       </QueryProvider>
     </LocaleProvider>
   );

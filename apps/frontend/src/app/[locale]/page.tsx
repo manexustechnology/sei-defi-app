@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 
-import { Dashboard } from '@/components/dashboard/dashboard';
+import { OrderlyTradingDashboard } from '@/components/trading/orderly-trading-dashboard';
 import { isLocale } from '@/i18n/config';
 
 type LocalePageProps = {
@@ -14,11 +14,5 @@ export default async function LocalePage({ params }: LocalePageProps) {
     notFound();
   }
 
-  return (
-    <main className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      <div className="mx-auto max-w-7xl px-6 py-8">
-        <Dashboard />
-      </div>
-    </main>
-  );
+  return <OrderlyTradingDashboard />;
 }

@@ -11,6 +11,19 @@ const nextConfig = {
   // See: https://nx.dev/recipes/next/next-config-setup
   output: 'standalone',
   nx: {},
+  webpack: (config, { isServer }) => {
+    // Ignore optional dependencies for client-side builds
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        'pino-pretty': false,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    return config;
+  },
 };
 
 const plugins = [

@@ -3,8 +3,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { ThemeToggle } from '@/components/theme-toggle';
-import { LanguageSwitcher } from '@/components/language-switcher';
 import { type Locale } from '@/i18n/config';
 
 type NavigationProps = {
@@ -52,13 +50,6 @@ export function Navigation({ locale, links }: NavigationProps) {
               </Link>
             );
           })}
-        </div>
-
-        {/* Right: Language Switcher & Theme Toggle */}
-        <div className="flex items-center gap-3">
-          <LanguageSwitcher activeLocale={locale} />
-          <div className="h-6 w-px bg-border/50" />
-          <ThemeToggle />
         </div>
       </div>
     </nav>
